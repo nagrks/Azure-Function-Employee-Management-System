@@ -637,3 +637,100 @@ The function should now:
 2. Verify MySQL is running and accessible
 3. Check if az_employees table exists with data
 4. Test other CRUD endpoints: POST, PUT, DELETE
+
+---
+
+## Chat History - Eleventh Conversation: Migration from MySQL to SQL Server
+### Date: November 19, 2025 (Continued)
+
+### Eleventh Conversation: Update DB Server Details for SQL Server Migration
+
+#### Request
+"I have modified the connectionstring to point to SQL DB. Can you please update the DBServer details wherever necessary"
+
+#### Database Server Details Updated To:
+- **Server**: 172.29.11.239
+- **Database**: ems
+- **Username**: sa
+- **Password**: Amer1can
+- **Port**: Default SQL Server port (1433)
+
+#### Changes Made
+
+1. **MyHttpTrigger.cs**
+   - Updated connection string from MySQL to SQL Server format
+   - Old: Server=localhost;Port=3306;Database=ems;Uid=root;Pwd=Amer1can;
+   - New: Server=172.29.11.239;Database=ems;Uid=sa;Pwd=Amer1can;
+
+2. **Services/EmployeeService.cs** - Complete migration from MySQL to SQL Server
+   - Removed: using MySql.Data.MySqlClient;
+   - Added: using System.Data.SqlClient;
+   - Replaced all instances:
+     - MySqlConnection  SqlConnection
+     - MySqlCommand  SqlCommand
+   - Updated SQL syntax in CreateEmployeeAsync():
+     - Old: SELECT LAST_INSERT_ID();
+     - New: SELECT CAST(SCOPE_IDENTITY() as int);
+   - Updated in all methods:
+     - GetAllaz_employeesAsync()
+     - GetEmployeeByIdAsync()
+     - CreateEmployeeAsync()
+     - UpdateEmployeeAsync()
+     - DeleteEmployeeAsync()
+
+3. **MyProjFolder.csproj** - Updated NuGet packages
+   - Removed: MySql.Data (v8.3.0)
+   - Added: System.Data.SqlClient (v4.8.6)
+
+4. **setup.sql** - Updated to SQL Server syntax
+   - Removed: CREATE TABLE IF NOT EXISTS (MySQL syntax)
+   - Added: IF NOT EXISTS check using INFORMATION_SCHEMA (SQL Server syntax)
+   - Changed: INT AUTO_INCREMENT PRIMARY KEY  INT IDENTITY(1,1) PRIMARY KEY
+   - Changed: TIMESTAMP DEFAULT CURRENT_TIMESTAMP  DATETIME DEFAULT GETDATE()
+   - Removed: ON UPDATE CURRENT_TIMESTAMP (not applicable to SQL Server)
+
+5. **README.md** - Updated documentation
+   - Changed database references from MySQL to SQL Server
+   - Updated connection string examples to use new server (172.29.11.239)
+   - Updated user credentials from root to sa
+   - Updated prerequisites section to reference SQL Server instead of MySQL
+
+#### Build Results After Migration
+ **Restore**: Succeeded
+- Package restored: System.Data.SqlClient v4.8.6
+- Removed: MySql.Data package dependency
+
+ **Build**: Succeeded
+- No Warnings
+- No Errors
+- Time: 2.48 seconds
+- Output: MyProjFolder.dll generated successfully
+
+#### Files Modified
+1. MyHttpTrigger.cs
+2. Services/EmployeeService.cs
+3. MyProjFolder.csproj
+4. setup.sql
+5. README.md
+6. Chat-History.txt (this file)
+
+#### Connection Verified
+- SQL Server connection string: Server=172.29.11.239;Database=ems;Uid=sa;Pwd=Amer1can;
+- Authentication: SQL Server Authentication (sa user)
+- Database: ems
+- Table: az_employees
+
+#### Migration Summary
+ All MySQL references replaced with SQL Server equivalents
+ NuGet packages updated
+ SQL syntax updated to SQL Server dialect
+ Connection string configured for SQL Server
+ Project builds successfully
+ Ready to test with SQL Server database
+
+#### Next Steps
+1. Ensure SQL Server is running on 172.29.11.239
+2. Create database 'ems' on SQL Server
+3. Run setup.sql script to create az_employees table
+4. Start the Azure Function: func start
+5. Test endpoints with Postman

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using MyProjFolder.Models;
 
 namespace MyProjFolder.Services
@@ -19,12 +19,12 @@ namespace MyProjFolder.Services
         {
             var az_employees = new List<Employee>();
 
-            using (var connection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 string query = "SELECT Id, Name, Email, Position, Salary, HireDate FROM az_employees";
                 
-                using (var command = new MySqlCommand(query, connection))
+                using (var command = new SqlCommand(query, connection))
                 {
                     using (var reader = await command.ExecuteReaderAsync())
                     {
@@ -49,12 +49,12 @@ namespace MyProjFolder.Services
 
         public async Task<Employee> GetEmployeeByIdAsync(int id)
         {
-            using (var connection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 string query = "SELECT Id, Name, Email, Position, Salary, HireDate FROM az_employees WHERE Id = @Id";
                 
-                using (var command = new MySqlCommand(query, connection))
+                using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Id", id);
                     
@@ -81,14 +81,14 @@ namespace MyProjFolder.Services
 
         public async Task<int> CreateEmployeeAsync(Employee employee)
         {
-            using (var connection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 string query = @"INSERT INTO az_employees (Name, Email, Position, Salary, HireDate) 
                                 VALUES (@Name, @Email, @Position, @Salary, @HireDate);
-                                SELECT LAST_INSERT_ID();";
+                                SELECT CAST(SCOPE_IDENTITY() as int);";
                 
-                using (var command = new MySqlCommand(query, connection))
+                using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Name", employee.Name ?? "");
                     command.Parameters.AddWithValue("@Email", employee.Email ?? "");
@@ -104,7 +104,7 @@ namespace MyProjFolder.Services
 
         public async Task<bool> UpdateEmployeeAsync(Employee employee)
         {
-            using (var connection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 string query = @"UPDATE az_employees 
@@ -112,7 +112,7 @@ namespace MyProjFolder.Services
                                    Salary = @Salary, HireDate = @HireDate 
                                WHERE Id = @Id";
                 
-                using (var command = new MySqlCommand(query, connection))
+                using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Id", employee.Id);
                     command.Parameters.AddWithValue("@Name", employee.Name ?? "");
@@ -129,12 +129,12 @@ namespace MyProjFolder.Services
 
         public async Task<bool> DeleteEmployeeAsync(int id)
         {
-            using (var connection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 string query = "DELETE FROM az_employees WHERE Id = @Id";
                 
-                using (var command = new MySqlCommand(query, connection))
+                using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Id", id);
                     int rowsAffected = await command.ExecuteNonQueryAsync();

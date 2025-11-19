@@ -1,28 +1,25 @@
 # Employee Management Azure Function
 
-This Azure Function HTTP Trigger connects to a MySQL database (ems) and provides CRUD operations for employee records.
+This Azure Function HTTP Trigger connects to a SQL Server database (ems) and provides CRUD operations for employee records.
 
 ## Prerequisites
 
-1. **MySQL Server**: Ensure MySQL is running on localhost:3306
+1. **SQL Server**: Ensure SQL Server is running on the configured host (172.29.11.239)
 2. **.NET 8.0**: Required to run this Azure Function
 3. **Azure Functions Core Tools**: For local testing
 
 ## Database Setup
 
-1. Create the MySQL database:
+1. Create the SQL Server database:
    ```sql
    CREATE DATABASE ems;
    ```
 
-2. Run the provided SQL script (`setup.sql`) to create the az_employees table:
-   ```bash
-   mysql -u root -p ems < setup.sql
-   ```
+2. Run the provided SQL script (`setup.sql`) to create the az_employees table in SQL Server format
 
 3. Update the connection string in `MyHttpTrigger.cs` if needed:
    ```csharp
-   private static readonly string ConnectionString = "Server=localhost;Database=ems;Uid=root;Pwd=;";
+   private static readonly string ConnectionString = "Server=172.29.11.239;Database=ems;Uid=sa;Pwd=Amer1can;";
    ```
 
 ## API Endpoints
