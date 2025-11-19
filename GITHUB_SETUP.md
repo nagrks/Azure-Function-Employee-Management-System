@@ -40,7 +40,7 @@ git push -u origin main
 ### Main Files
 - **MyHttpTrigger.cs** - HTTP trigger with CRUD endpoints
 - **Models/Employee.cs** - Employee data model
-- **Services/EmployeeService.cs** - MySQL database service
+- **Services/az_employeeservice.cs** - MySQL database service
 - **MyProjFolder.csproj** - Project configuration with MySql.Data dependency
 
 ### Documentation

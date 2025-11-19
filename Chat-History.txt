@@ -18,7 +18,7 @@ Read MyProjFolder.csproj
 
 - Models/Employee.cs - (to be created)Add the MySQL NuGet package dependency
 
-- Services/EmployeeService.cs - (to be created)Create an Employee model class
+- Services/az_employeeservice.cs - (to be created)Create an Employee model class
 
 - setup.sql - (to be populated)Create a database service class to handle MySQL connections
 
@@ -46,17 +46,17 @@ Properties:
 
 - Position (string) - Job position
 
-- Salary (decimal) - Salary amountCreated EmployeeService.cs
+- Salary (decimal) - Salary amountCreated az_employeeservice.cs
 
 - HireDate (DateTime) - Hire date
 
 Now I'll update the HTTP trigger to handle employee operations:
 
-#### 3. Created EmployeeService (Services/EmployeeService.cs)
+#### 3. Created az_employeeservice (Services/az_employeeservice.cs)
 
 Database Methods:MyHttpTrigger.cs+82-12
 
-- GetAllEmployeesAsync() - Retrieve all employees from databaseNow let me create a SQL setup script to help you create the database table:
+- GetAllaz_employeesAsync() - Retrieve all az_employees from databaseNow let me create a SQL setup script to help you create the database table:
 
 - GetEmployeeByIdAsync(int id) - Retrieve specific employee by ID
 
@@ -86,9 +86,9 @@ Route: api/employee/{id?}2. Created Employee Model (Employee.cs)
 
 Supported HTTP Methods:Id, Name, Email, Position, Salary, HireDate properties
 
-- GET /api/employee - Get all employees3. Created Employee Service (EmployeeService.cs)
+- GET /api/employee - Get all az_employees3. Created Employee Service (az_employeeservice.cs)
 
-- GET /api/employee/{id} - Get employee by IDGetAllEmployeesAsync() - Retrieve all employees
+- GET /api/employee/{id} - Get employee by IDGetAllaz_employeesAsync() - Retrieve all az_employees
 
 - POST /api/employee - Create new employee (JSON body)GetEmployeeByIdAsync(int id) - Retrieve a specific employee
 
@@ -110,7 +110,7 @@ Response Codes:All methods use parameterized queries to prevent SQL injection
 
 - 500 Internal Server Error - Database errors5. Created SQL Setup Script (setup.sql)
 
-Creates the employees table in the ems database
+Creates the az_employees table in the ems database
 
 #### 5. Created setup.sqlIncludes automatic timestamp management
 
@@ -118,7 +118,7 @@ SQL Script for database initialization:Next Steps
 
 ```sqlUpdate connection string in MyHttpTrigger.cs if needed (user, password, or port differs)
 
-CREATE TABLE IF NOT EXISTS employees (Run the SQL setup script to create the database table
+CREATE TABLE IF NOT EXISTS az_employees (Run the SQL setup script to create the database table
 
     Id INT AUTO_INCREMENT PRIMARY KEY,Restore NuGet packages: dotnet restore
 
@@ -159,7 +159,7 @@ Body: {
 }
 ```
 
-**Get All Employees:**
+**Get All az_employees:**
 ```
 GET /api/employee
 ```
@@ -232,7 +232,7 @@ MyProjFolder/
 ├── Models/
 │   └── Employee.cs               (Employee data model)
 ├── Services/
-│   └── EmployeeService.cs        (Database operations service)
+│   └── az_employeeservice.cs        (Database operations service)
 ├── Properties/
 │   └── launchSettings.json
 ├── setup.sql                      (Database initialization script)
@@ -290,10 +290,10 @@ MyProjFolder/
 3. **Files Committed to Git**
    - MyHttpTrigger.cs (HTTP trigger with CRUD endpoints)
    - Models/Employee.cs (Employee data model)
-   - Services/EmployeeService.cs (Database service)
+   - Services/az_employeeservice.cs (Database service)
    - MyProjFolder.csproj (Project configuration)
    - Models/Employee.cs (Employee model)
-   - Services/EmployeeService.cs (Database service)
+   - Services/az_employeeservice.cs (Database service)
    - README.md (Project documentation)
    - Chat-History.txt (Chat history)
    - setup.sql (Database initialization)
@@ -358,7 +358,7 @@ MyProjFolder/
 ├── Models/
 │   └── Employee.cs               (Employee data model)
 ├── Services/
-│   └── EmployeeService.cs        (Database operations)
+│   └── az_employeeservice.cs        (Database operations)
 ├── MyProjFolder.csproj           (Project file with dependencies)
 ├── README.md                      (Full documentation)
 ├── Chat-History.txt              (This file - complete conversation history)

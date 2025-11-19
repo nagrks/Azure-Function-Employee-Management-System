@@ -22,7 +22,7 @@ Created Employee.cs
 
 Now I'll create a database service class to handle MySQL operations:
 
-Created EmployeeService.cs
+Created az_employeeservice.cs
 
 Now I'll update the HTTP trigger to handle employee operations:
 
@@ -42,8 +42,8 @@ Summary of Changes
 Added MySql.Data NuGet package for MySQL connectivity
 2. Created Employee Model (Employee.cs)
 Id, Name, Email, Position, Salary, HireDate properties
-3. Created Employee Service (EmployeeService.cs)
-GetAllEmployeesAsync() - Retrieve all employees
+3. Created Employee Service (az_employeeservice.cs)
+GetAllaz_employeesAsync() - Retrieve all az_employees
 GetEmployeeByIdAsync(int id) - Retrieve a specific employee
 CreateEmployeeAsync(Employee employee) - Add new employee
 UpdateEmployeeAsync(Employee employee) - Update existing employee
@@ -54,7 +54,7 @@ Supports GET, POST, PUT, DELETE methods
 Route: api/employee/{id?}
 Handles all CRUD operations with proper error handling
 5. Created SQL Setup Script (setup.sql)
-Creates the employees table in the ems database
+Creates the az_employees table in the ems database
 Includes automatic timestamp management
 Next Steps
 Update connection string in MyHttpTrigger.cs if needed (user, password, or port differs)

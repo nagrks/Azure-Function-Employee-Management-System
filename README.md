@@ -15,7 +15,7 @@ This Azure Function HTTP Trigger connects to a MySQL database (ems) and provides
    CREATE DATABASE ems;
    ```
 
-2. Run the provided SQL script (`setup.sql`) to create the employees table:
+2. Run the provided SQL script (`setup.sql`) to create the az_employees table:
    ```bash
    mysql -u root -p ems < setup.sql
    ```
@@ -27,7 +27,7 @@ This Azure Function HTTP Trigger connects to a MySQL database (ems) and provides
 
 ## API Endpoints
 
-### Get All Employees
+### Get All az_employees
 - **Method**: GET
 - **URL**: `http://localhost:7071/api/employee`
 - **Response**: Array of employee objects
@@ -90,7 +90,7 @@ This Azure Function HTTP Trigger connects to a MySQL database (ems) and provides
 
 - `MyHttpTrigger.cs` - Main Azure Function HTTP trigger with routing logic
 - `Models/Employee.cs` - Employee data model
-- `Services/EmployeeService.cs` - Database service for employee operations
+- `Services/az_employeeservice.cs` - Database service for employee operations
 - `setup.sql` - SQL script for database initialization
 - `MyProjFolder.csproj` - Project file with dependencies
 

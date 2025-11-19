@@ -60,7 +60,7 @@ After successful push:
 - Verify these files are present:
   - ✅ MyHttpTrigger.cs
   - ✅ Models/Employee.cs
-  - ✅ Services/EmployeeService.cs
+  - ✅ Services/az_employeeservice.cs
   - ✅ Chat-History.txt (with full conversation)
   - ✅ README.md
   - ✅ GITHUB_SETUP.md

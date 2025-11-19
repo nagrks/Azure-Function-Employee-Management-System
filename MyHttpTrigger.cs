@@ -15,7 +15,7 @@ namespace MyProjFolder
     public static class MyHttpTrigger
     {
         private static readonly string ConnectionString = "Server=localhost;Database=ems;Uid=root;Pwd=;";
-        private static readonly EmployeeService EmployeeService = new EmployeeService(ConnectionString);
+        private static readonly az_employeeservice az_employeeservice = new az_employeeservice(ConnectionString);
 
         [FunctionName("MyHttpTrigger")]
         public static async Task<IActionResult> Run(
@@ -27,17 +27,17 @@ namespace MyProjFolder
 
             try
             {
-                // GET all employees
+                // GET all az_employees
                 if (req.Method == "GET" && string.IsNullOrEmpty(id))
                 {
-                    var employees = await EmployeeService.GetAllEmployeesAsync();
-                    return new OkObjectResult(employees);
+                    var az_employees = await az_employeeservice.GetAllaz_employeesAsync();
+                    return new OkObjectResult(az_employees);
                 }
 
                 // GET employee by ID
                 if (req.Method == "GET" && !string.IsNullOrEmpty(id) && int.TryParse(id, out int employeeId))
                 {
-                    var employee = await EmployeeService.GetEmployeeByIdAsync(employeeId);
+                    var employee = await az_employeeservice.GetEmployeeByIdAsync(employeeId);
                     if (employee != null)
                     {
                         return new OkObjectResult(employee);
@@ -56,7 +56,7 @@ namespace MyProjFolder
                         return new BadRequestObjectResult("Employee name is required");
                     }
 
-                    int newId = await EmployeeService.CreateEmployeeAsync(employee);
+                    int newId = await az_employeeservice.CreateEmployeeAsync(employee);
                     employee.Id = newId;
                     return new CreatedResult($"employee/{newId}", employee);
                 }
@@ -73,7 +73,7 @@ namespace MyProjFolder
                     }
 
                     employee.Id = updateId;
-                    bool updated = await EmployeeService.UpdateEmployeeAsync(employee);
+                    bool updated = await az_employeeservice.UpdateEmployeeAsync(employee);
                     
                     if (updated)
                     {
@@ -85,7 +85,7 @@ namespace MyProjFolder
                 // DELETE - Delete employee
                 if (req.Method == "DELETE" && !string.IsNullOrEmpty(id) && int.TryParse(id, out int deleteId))
                 {
-                    bool deleted = await EmployeeService.DeleteEmployeeAsync(deleteId);
+                    bool deleted = await az_employeeservice.DeleteEmployeeAsync(deleteId);
                     
                     if (deleted)
                     {

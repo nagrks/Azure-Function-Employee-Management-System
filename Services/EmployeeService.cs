@@ -6,23 +6,23 @@ using MyProjFolder.Models;
 
 namespace MyProjFolder.Services
 {
-    public class EmployeeService
+    public class az_employeeservice
     {
         private readonly string _connectionString;
 
-        public EmployeeService(string connectionString)
+        public az_employeeservice(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public async Task<List<Employee>> GetAllEmployeesAsync()
+        public async Task<List<Employee>> GetAllaz_employeesAsync()
         {
-            var employees = new List<Employee>();
+            var az_employees = new List<Employee>();
 
             using (var connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                string query = "SELECT Id, Name, Email, Position, Salary, HireDate FROM employees";
+                string query = "SELECT Id, Name, Email, Position, Salary, HireDate FROM az_employees";
                 
                 using (var command = new MySqlCommand(query, connection))
                 {
@@ -30,7 +30,7 @@ namespace MyProjFolder.Services
                     {
                         while (await reader.ReadAsync())
                         {
-                            employees.Add(new Employee
+                            az_employees.Add(new Employee
                             {
                                 Id = reader.GetInt32("Id"),
                                 Name = reader.GetString("Name"),
@@ -44,7 +44,7 @@ namespace MyProjFolder.Services
                 }
             }
 
-            return employees;
+            return az_employees;
         }
 
         public async Task<Employee> GetEmployeeByIdAsync(int id)
@@ -52,7 +52,7 @@ namespace MyProjFolder.Services
             using (var connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                string query = "SELECT Id, Name, Email, Position, Salary, HireDate FROM employees WHERE Id = @Id";
+                string query = "SELECT Id, Name, Email, Position, Salary, HireDate FROM az_employees WHERE Id = @Id";
                 
                 using (var command = new MySqlCommand(query, connection))
                 {
@@ -84,7 +84,7 @@ namespace MyProjFolder.Services
             using (var connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                string query = @"INSERT INTO employees (Name, Email, Position, Salary, HireDate) 
+                string query = @"INSERT INTO az_employees (Name, Email, Position, Salary, HireDate) 
                                 VALUES (@Name, @Email, @Position, @Salary, @HireDate);
                                 SELECT LAST_INSERT_ID();";
                 
@@ -107,7 +107,7 @@ namespace MyProjFolder.Services
             using (var connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                string query = @"UPDATE employees 
+                string query = @"UPDATE az_employees 
                                SET Name = @Name, Email = @Email, Position = @Position, 
                                    Salary = @Salary, HireDate = @HireDate 
                                WHERE Id = @Id";
@@ -132,7 +132,7 @@ namespace MyProjFolder.Services
             using (var connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                string query = "DELETE FROM employees WHERE Id = @Id";
+                string query = "DELETE FROM az_employees WHERE Id = @Id";
                 
                 using (var command = new MySqlCommand(query, connection))
                 {

@@ -1,7 +1,7 @@
--- SQL Script to create the employees table
+-- SQL Script to create the az_employees table
 -- Run this script in your MySQL database (ems)
 
-CREATE TABLE IF NOT EXISTS employees (
+CREATE TABLE IF NOT EXISTS az_employees (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
@@ -13,6 +13,6 @@ CREATE TABLE IF NOT EXISTS employees (
 );
 
 -- Sample data (optional)
--- INSERT INTO employees (Name, Email, Position, Salary, HireDate) VALUES
+-- INSERT INTO az_employees (Name, Email, Position, Salary, HireDate) VALUES
 -- ('John Doe', 'john@example.com', 'Software Engineer', 75000, '2023-01-15'),
 -- ('Jane Smith', 'jane@example.com', 'Manager', 85000, '2022-06-20');
