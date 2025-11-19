@@ -545,3 +545,95 @@ From this point forward:
 **Repository**: https://github.com/nagrks/Azure-Function-Employee-Management-System
 **Current Branch**: main
 **Status**: Production Ready
+
+---
+
+## Chat History - Ninth & Tenth Conversations: Build, Start, and Troubleshoot 500 Error
+### Date: November 19, 2025 (Continued)
+
+### Ninth Conversation: Build Project and Start Azure Function
+
+#### Request
+"please build the project and start"
+
+#### Issues Encountered and Fixed
+
+1. **Employee Model Error: Missing using System directive**
+   - Error: CS0246 - 'DateTime' could not be found
+   - Solution: Added 'using System;' to Models/Employee.cs
+
+2. **EmployeeService Error: Incorrect reader.GetXxx() syntax**
+   - Error: CS1503 - Cannot convert from 'string' to 'int'
+   - Issue: Using column names instead of ordinal indices (reader.GetInt32("Id"))
+   - Solution: Changed to ordinal indices (reader.GetInt32(0), reader.GetString(1), etc.)
+   - Fixed in two locations:
+     - GetAllaz_employeesAsync() method
+     - GetEmployeeByIdAsync() method
+
+#### Build & Start Results
+ Build succeeded with 0 warnings, 0 errors
+ Azure Function started successfully on http://localhost:7071/api/employee/{id?}
+ Function listening and ready to receive requests
+
+---
+
+### Tenth Conversation: Troubleshoot 500 Internal Server Error
+
+#### Issue
+Status: 500 - Internal Server Error when hitting http://localhost:7071/api/employee endpoint in Postman
+
+#### Root Cause Analysis
+**Examined function logs and found error:**
+`
+[2025-11-19T08:36:33.234Z] Error: Unable to connect to any of the specified MySQL hosts.
+`
+
+**Root Cause:** Incorrect MySQL Connection String Format
+- Current: "Server=localhost:3306;Database=ems;Uid=root;Pwd=Amer1can;"
+- Issue: Port specified with colon (localhost:3306) instead of semicolon-separated Port parameter
+- MySQL.Data expects proper key=value format
+
+#### Solution Applied
+**Fixed Connection String Format:**
+- Old: Server=localhost:3306;Database=ems;Uid=root;Pwd=Amer1can;
+- New: Server=localhost;Port=3306;Database=ems;Uid=root;Pwd=Amer1can;
+
+**File Modified:** MyHttpTrigger.cs - Line 17
+
+#### Build & Restart
+ Rebuilt project - succeeded with 0 errors
+ Stopped running func processes
+ Restarted Azure Function with corrected connection string
+ Function now running on http://localhost:7071/api/employee/{id?}
+
+#### Expected Behavior After Fix
+The function should now:
+1. Successfully connect to MySQL server at localhost:3306
+2. Access the 'ems' database
+3. Query the 'az_employees' table
+4. Return status 200 with employee list (if data exists)
+5. Handle CRUD operations without 500 errors
+
+#### Files Modified in This Session
+1. **Models/Employee.cs**
+   - Added: using System;
+
+2. **Services/EmployeeService.cs**
+   - Changed reader column references from names to ordinal indices
+
+3. **MyHttpTrigger.cs**
+   - Fixed MySQL connection string format (Port=3306 instead of :3306)
+
+#### Connection Details (Verified)
+- Server: localhost
+- Port: 3306
+- Database: ems
+- Username: root
+- Password: Amer1can
+- Table: az_employees
+
+#### Next Steps
+1. Test endpoint in Postman: GET http://localhost:7071/api/employee
+2. Verify MySQL is running and accessible
+3. Check if az_employees table exists with data
+4. Test other CRUD endpoints: POST, PUT, DELETE

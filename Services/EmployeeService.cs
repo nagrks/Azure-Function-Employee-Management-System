@@ -32,12 +32,12 @@ namespace MyProjFolder.Services
                         {
                             az_employees.Add(new Employee
                             {
-                                Id = reader.GetInt32("Id"),
-                                Name = reader.GetString("Name"),
-                                Email = reader.GetString("Email"),
-                                Position = reader.GetString("Position"),
-                                Salary = reader.GetDecimal("Salary"),
-                                HireDate = reader.GetDateTime("HireDate")
+                                Id = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                Email = reader.GetString(2),
+                                Position = reader.GetString(3),
+                                Salary = reader.GetDecimal(4),
+                                HireDate = reader.GetDateTime(5)
                             });
                         }
                     }
@@ -64,12 +64,12 @@ namespace MyProjFolder.Services
                         {
                             return new Employee
                             {
-                                Id = reader.GetInt32("Id"),
-                                Name = reader.GetString("Name"),
-                                Email = reader.GetString("Email"),
-                                Position = reader.GetString("Position"),
-                                Salary = reader.GetDecimal("Salary"),
-                                HireDate = reader.GetDateTime("HireDate")
+                                Id = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                Email = reader.GetString(2),
+                                Position = reader.GetString(3),
+                                Salary = reader.GetDecimal(4),
+                                HireDate = reader.GetDateTime(5)
                             };
                         }
                     }

@@ -14,7 +14,7 @@ namespace MyProjFolder
 {
     public static class MyHttpTrigger
     {
-        private static readonly string ConnectionString = "Server=localhost;Database=ems;Uid=root;Pwd=;";
+        private static readonly string ConnectionString = "Server=localhost;Port=3306;Database=ems;Uid=root;Pwd=Amer1can;";
         private static readonly az_employeeservice az_employeeservice = new az_employeeservice(ConnectionString);
 
         [FunctionName("MyHttpTrigger")]

@@ -1,3 +1,5 @@
+using System;
+
 namespace MyProjFolder.Models
 {
     public class Employee
